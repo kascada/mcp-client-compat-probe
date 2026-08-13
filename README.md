@@ -4,13 +4,27 @@ Small diagnostic MCP server for checking what MCP clients actually support.
 
 The server is intentionally dependency-free and split into transport-neutral core logic plus a local `stdio` adapter. A future HTTP adapter can reuse `probe-core.mjs` for ChatGPT Web, OpenAI API, or remote MCP testing.
 
-The intended workflow is AI-assisted: clone the repo, open it in the assistant/client you want to test, paste [`PROMPT.md`](PROMPT.md), and let the assistant run the probe, inspect the trace, create a result file, and prepare a commit.
+The intended workflow is AI-assisted: point the assistant/client you want to test at this repository and let it run the probe, inspect the trace, create a result file, and prepare a commit. In practice that is a single prompt.
 
 The current informal client support overview lives in [`CLIENT-MATRIX.md`](CLIENT-MATRIX.md). Detailed test design and result templates live in [`TESTPLAN.md`](TESTPLAN.md).
 
 ## Quick Start For Testers
 
-Human steps:
+### Option A: One Prompt
+
+Start the assistant or client you want to test, in a directory it is allowed to write to, and give it this:
+
+```text
+Clone https://github.com/kascada/mcp-client-compat-probe.git, then read PROMPT.md from that clone and follow the prompt inside it. You are the client under test.
+```
+
+That is the whole setup. From there the assistant clones the repo, runs the smoke test, registers the probe as a local MCP server, runs the probe interactions, inspects the trace, and writes the result file. It comes back to you only for the things it genuinely cannot do itself: restarting the client so it picks up the MCP config, invoking anything the client exposes only as a user action, and approving the push or pull request.
+
+This assumes a client that can run shell commands and read local files, such as Claude Code, Codex CLI, OpenCode or Cursor. If yours cannot, use Option B.
+
+### Option B: Step By Step
+
+The same test, spelled out. Use this if your client cannot clone on its own, or if you want to see what Option A will do before you run it.
 
 1. Clone this repository.
 
