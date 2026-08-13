@@ -42,6 +42,26 @@ The assistant should handle the rest:
 
 Do not commit full trace files by default. Result files should include only small redacted excerpts.
 
+## Contributing A Result
+
+This repository is public, which means anyone can read and clone it, but not push to it. Cloning does not create a fork and grants no write access, so contributing a result goes through a pull request from your own fork. The assistant can do this for you; the manual equivalent is:
+
+```bash
+gh repo fork --remote                                   # your own fork, no permissions needed here
+git switch -c probe-result-<client>-<username>
+git add results/<client>-<username>-<date>.md           # only the result file
+git commit -m "Add <client> probe result <username> <date>"
+git push -u origin probe-result-<client>-<username>     # pushes to your fork
+gh pr create --repo kascada/mcp-client-compat-probe
+```
+
+Use your GitHub account name as `<username>`, so the result is attributable in the shared collection.
+
+If you cannot or do not want to open a pull request, both of these are fine too:
+
+- Open an issue and attach the result file.
+- Send the result file to the repository author directly, together with the client version, the operating system, and your MCP config with secrets removed.
+
 ## Files
 
 ```text
