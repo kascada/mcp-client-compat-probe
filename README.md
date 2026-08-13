@@ -13,6 +13,19 @@ Detailed test design and result templates live in [`TESTPLAN.md`](TESTPLAN.md).
 Human steps:
 
 1. Clone this repository.
+
+   ```bash
+   git clone https://github.com/kascada/mcp-client-compat-probe.git
+   cd mcp-client-compat-probe
+   ```
+
+   HTTPS is recommended for most testers because it works without a configured SSH key. If you already use GitHub over SSH, this is equivalent:
+
+   ```bash
+   git clone git@github.com:kascada/mcp-client-compat-probe.git
+   cd mcp-client-compat-probe
+   ```
+
 2. Open the cloned directory in the MCP-capable assistant/client you want to test.
 3. Paste the full content of [`PROMPT.md`](PROMPT.md) into that assistant.
 4. Follow only the explicit prompts for client restart, MCP setup confirmation, and push/PR approval.
