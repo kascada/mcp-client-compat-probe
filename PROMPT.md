@@ -2,10 +2,10 @@
 
 Use this prompt after cloning the repository. Paste it into the MCP-capable assistant you want to test.
 
-Replace the placeholders before running:
+You may replace the placeholders before running, but the assistant should infer or ask for missing values when possible:
 
 - `CLIENT_NAME`: the client under test, for example `claude-code`, `opencode`, `codex-cli`, `chatgpt-desktop`, `cursor`, `vscode-copilot`
-- `TRACE_FILE`: the trace path configured through `MCP_PROBE_TRACE`, for example `/tmp/mcp-probe-claude-code.ndjson`
+- `TRACE_FILE`: the trace path configured through `MCP_PROBE_TRACE`, for example `/tmp/mcp-probe-claude-code.ndjson`. If omitted, use `/tmp/mcp-probe-CLIENT_NAME-USERNAME-YYYY-MM-DD.ndjson`.
 
 ## Prompt
 
@@ -16,7 +16,7 @@ Client under test: CLIENT_NAME
 Trace file: TRACE_FILE
 
 Goal:
-Run the local MCP probe tests, inspect the trace, write one result file under `results/`, and prepare a commit. Do not push without explicit user confirmation.
+Run the local MCP probe tests as autonomously as possible, inspect the trace, write one result file under `results/`, and prepare a commit. Do not push without explicit user confirmation.
 
 Rules:
 - Do not edit probe server implementation files unless the smoke test fails because of a local setup issue and the user approves the fix.
@@ -26,6 +26,9 @@ Rules:
 - Use the current date in ISO format.
 - Result filename format: `results/CLIENT_NAME-USERNAME-YYYY-MM-DD.md`.
 - If multiple result files for the same client/user/date already exist, append `-2`, `-3`, etc.
+- Ask the user only when blocked by something you cannot do yourself, such as restarting the client, confirming the client name, approving a config change, or approving push/PR creation.
+- If `CLIENT_NAME` is not replaced, infer it from the current assistant/client. If unsure, ask one short question.
+- If `TRACE_FILE` is not replaced, compute a default trace path using the inferred client name, username, and current date.
 
 Steps:
 
@@ -38,11 +41,13 @@ Steps:
    - Run `npm run smoke`.
    - If smoke fails, stop and report the error.
 
-3. Confirm MCP server configuration.
+3. Confirm or set up MCP server configuration.
    - Check whether the client has the local `stdio-server.mjs` configured as an MCP server.
-   - If not configured, tell the user the exact config needed for this client if known.
+   - If the client has a writable local config and you know the correct format, add or update the MCP config yourself, preserving unrelated settings.
+   - If the client config cannot be edited safely, tell the user the exact config needed.
    - Ensure `MCP_PROBE_TRACE` points to `TRACE_FILE`.
-   - If the client requires restart to load MCP config, tell the user to restart and then resume.
+   - If the client requires restart to load MCP config, tell the user to restart and then resume from this step.
+   - If the MCP server is already connected, continue without asking.
 
 4. Run probe interactions through MCP tools/resources/prompts when available.
    - T1: Use `echo_meta` and record the received `_meta` fields.
@@ -77,6 +82,7 @@ Steps:
    - Stage only the new result file.
    - Commit message format: `Add CLIENT_NAME probe result USERNAME YYYY-MM-DD`.
    - Do not push unless the user explicitly says to push.
+   - If this is a fork, tell the user to open a pull request after pushing. If the GitHub CLI is available and authenticated, offer to create the PR.
 
 9. Report back.
    - State the result file path.

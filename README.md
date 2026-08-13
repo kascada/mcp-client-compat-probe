@@ -4,7 +4,29 @@ Small diagnostic MCP server for checking what MCP clients actually support.
 
 The server is intentionally dependency-free and split into transport-neutral core logic plus a local `stdio` adapter. A future HTTP adapter can reuse `probe-core.mjs` for ChatGPT Web, OpenAI API, or remote MCP testing.
 
-For repeatable client tests, result templates, and sharing recommendations, see [`TESTPLAN.md`](TESTPLAN.md). To ask an MCP-capable assistant to run the test and prepare a result file, use [`PROMPT.md`](PROMPT.md).
+The intended workflow is AI-assisted: clone the repo, open it in the assistant/client you want to test, paste [`PROMPT.md`](PROMPT.md), and let the assistant run the probe, inspect the trace, create a result file, and prepare a commit.
+
+Detailed test design and result templates live in [`TESTPLAN.md`](TESTPLAN.md).
+
+## Quick Start For Testers
+
+Human steps:
+
+1. Clone this repository.
+2. Open the cloned directory in the MCP-capable assistant/client you want to test.
+3. Paste the full content of [`PROMPT.md`](PROMPT.md) into that assistant.
+4. Follow only the explicit prompts for client restart, MCP setup confirmation, and push/PR approval.
+
+The assistant should handle the rest:
+
+- run `npm run smoke`
+- help configure the local `stdio` MCP server if needed
+- run the probe interactions
+- inspect the trace file
+- write `results/<client>-<username>-<date>.md`
+- stage and commit only that result file
+
+Do not commit full trace files by default. Result files should include only small redacted excerpts.
 
 ## Files
 
@@ -20,17 +42,6 @@ mcp-probe/
   results/                # contributed client observations
   scripts/smoke-stdio.mjs # direct stdio smoke test
 ```
-
-## Quick Contributor Workflow
-
-1. Clone this repository.
-2. Run `npm run smoke`.
-3. Configure your MCP client to start `stdio-server.mjs` and set `MCP_PROBE_TRACE`.
-4. Paste [`PROMPT.md`](PROMPT.md) into the assistant you are testing.
-5. Review the generated result file under `results/`.
-6. Open a pull request with only the result file.
-
-Do not commit full trace files by default. Include only small redacted excerpts in the result markdown.
 
 ## Probe Coverage
 
