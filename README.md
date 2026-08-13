@@ -6,7 +6,7 @@ The server is intentionally dependency-free and split into transport-neutral cor
 
 The intended workflow is AI-assisted: clone the repo, open it in the assistant/client you want to test, paste [`PROMPT.md`](PROMPT.md), and let the assistant run the probe, inspect the trace, create a result file, and prepare a commit.
 
-Detailed test design and result templates live in [`TESTPLAN.md`](TESTPLAN.md).
+The current informal client support overview lives in [`CLIENT-MATRIX.md`](CLIENT-MATRIX.md). Detailed test design and result templates live in [`TESTPLAN.md`](TESTPLAN.md).
 
 ## Quick Start For Testers
 
@@ -47,6 +47,7 @@ Do not commit full trace files by default. Result files should include only smal
 ```text
 mcp-probe/
   README.md              # quickstart and feature overview
+  CLIENT-MATRIX.md       # informal client support matrix
   PROMPT.md              # assistant prompt for running and recording tests
   TESTPLAN.md            # repeatable client test plan
   probe-core.mjs          # JSON-RPC handlers and probe tools
