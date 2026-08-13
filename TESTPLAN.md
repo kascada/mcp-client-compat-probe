@@ -430,11 +430,13 @@ mcp-probe/
 
 Recommended workflow:
 
-1. Tester clones the repo.
+1. Tester clones the repo. A clone is not a fork and carries no write access; the repository being public grants read access only.
 2. Tester runs `npm run smoke`.
 3. Tester runs the client-specific test.
-4. Tester adds a result file under `results/`.
-5. Tester opens a pull request or attaches the result to an issue.
+4. Tester adds a result file under `results/`, named with their GitHub account so the result is attributable.
+5. Tester contributes it by the first route available: pull request from their own fork (`gh repo fork --remote`), otherwise an issue with the result file attached, otherwise sending the file to the repository author directly.
+
+Only accounts explicitly added as collaborators can push to this repository. Everyone else contributes through a fork, which needs no permissions here.
 
 ### Recommendation
 

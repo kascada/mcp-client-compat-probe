@@ -105,7 +105,13 @@ Steps:
    - Stage only the new result file.
    - Commit message format: `Add CLIENT_NAME probe result USERNAME YYYY-MM-DD`.
    - Do not push unless the user explicitly says to push.
-   - A pull request is the normal way to contribute a result, whether or not the repository is a fork, because results from many testers are collected centrally. Once the user approves the push, offer to open the PR, using the GitHub CLI if it is available and authenticated.
+   - A pull request is the normal way to contribute a result, because results from many testers are collected centrally. Do not decide this from whether the repository is a fork: a plain `git clone` is never a fork, so that test is almost always wrong. What decides it is write access, and a public repository grants read access only. Check the actual permission, for example with `gh repo view --json viewerPermission`.
+   - Once the user approves, take the first of these routes that works, and say in your report which one you took:
+     1. You have write access to the upstream repository: push the branch there and open the pull request.
+     2. No write access, GitHub CLI available and authenticated: create a fork with `gh repo fork --remote`, push the branch to that fork, and open the pull request against the upstream repository. This needs no permissions on the upstream repository at all.
+     3. No usable GitHub CLI: tell the user to open an issue on the upstream repository and attach the result file.
+     4. No GitHub access at all: tell the user to send the result file to the repository author directly, together with the client version, the operating system, and the redacted MCP config.
+   - Never route around missing permissions by force-pushing, by rewriting shared history, or by committing to the default branch.
 
 9. Report back.
    - State the result file path.
