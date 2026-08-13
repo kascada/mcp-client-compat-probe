@@ -1,0 +1,15 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "mcp": {
+    "probe": {
+      "type": "local",
+      "command": ["node", "stdio-server.mjs"],
+      "cwd": ".",
+      "enabled": true,
+      "timeout": 10000,
+      "environment": {
+        "MCP_PROBE_TRACE": "/tmp/mcp-probe-opencode.ndjson"
+      }
+    }
+  }
+}

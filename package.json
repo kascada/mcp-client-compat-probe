@@ -1,0 +1,13 @@
+{
+  "name": "mcp-probe",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node stdio-server.mjs",
+    "smoke": "node scripts/smoke-stdio.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
