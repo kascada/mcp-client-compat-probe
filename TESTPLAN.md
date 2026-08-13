@@ -8,6 +8,8 @@ The goal is not formal MCP certification. The goal is to replace public-document
 
 `mcp-probe` is a small diagnostic MCP server. It exposes tools, resources, prompts, structured results, explicit handles, and an MRTR/Elicitation test tool. It logs every JSON-RPC message so the test result can be inspected independently of the assistant's final answer.
 
+The reference point is the MCP revision `2026-07-28`. The probe answers `supportedVersions: ["2026-07-28", "2025-11-25", "2025-06-18"]`, so a client can negotiate down. Most of what the probe measures is what that revision added: `server/discover` in place of `initialize`, per-request `_meta.io.modelcontextprotocol/*`, `resultType` on every response, `input_required` with `inputResponses` and `requestState`, and `subscriptions/listen`. Older features such as `structuredContent`, `outputSchema` and `isError` are included so a client that handles the established surface well but has not moved to the new revision is visibly distinguishable from one that has.
+
 Current transport:
 
 - Local `stdio`
@@ -310,24 +312,40 @@ PASTE_REDACTED_MCP_CONFIG
 
 ## Summary Matrix
 
+The split below is a reading aid for how far a client has moved toward `2026-07-28`, not a formal spec citation. Fill both blocks either way.
+
+### Baseline
+
 | Feature | Result | Evidence |
 |---|---:|---|
 | Local stdio server starts | ? | |
-| initialize used | ? | |
+| highest protocol version negotiated | ? | |
+
+### Target Revision Surface (2026-07-28)
+
+| Feature | Result | Evidence |
+|---|---:|---|
 | server/discover used | ? | |
+| initialize used (legacy path) | ? | |
+| per-request protocolVersion in _meta | ? | |
+| per-request clientCapabilities in _meta | ? | |
+| elicitation capability declared | ? | |
+| input_required / MRTR retry | ? | |
+| subscriptions/listen used | ? | |
+
+### Established MCP Surface
+
+| Feature | Result | Evidence |
+|---|---:|---|
 | tools/list | ? | |
 | tools/call | ? | |
 | resources/list | ? | |
 | resources/read | ? | |
 | prompts/list | ? | |
 | prompts/get | ? | |
-| per-request protocolVersion in _meta | ? | |
-| per-request clientCapabilities in _meta | ? | |
-| elicitation capability declared | ? | |
 | structuredContent usable | ? | |
 | explicit handle carried across calls | ? | |
 | isError tool result handled | ? | |
-| input_required / MRTR retry | ? | |
 | search/fetch pattern | ? | |
 
 ## Notes
