@@ -117,6 +117,12 @@ Steps:
    - State the result file path.
    - Summarize major observed support and gaps.
    - If not pushed, tell the user the command they can run: `git push`.
+
+10. Clean up.
+   - The probe server was registered only for this test, so offer to remove it again once the result has been contributed, or at the end of the run if the user stops earlier. Do not remove it without asking, because the user may want to re-run a test.
+   - If you added the MCP configuration yourself in step 3, you can normally remove it the same way. Undo exactly what you added and leave unrelated servers and settings untouched.
+   - If you cannot remove it yourself, give the user the literal command or the menu path for this specific client, not a generic instruction. It differs per client, for example `claude mcp remove probe -s local`, `codex mcp remove probe`, an entry in `opencode.json`, or a settings panel in a desktop app.
+   - Say whether the client needs a restart for the removal to take effect, and mention the trace file location so the user can delete it if they want.
 ```
 
 ## Notes For Any Client
