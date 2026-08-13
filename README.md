@@ -27,7 +27,8 @@ Human steps:
    ```
 
 2. Open the cloned directory in the MCP-capable assistant/client you want to test.
-3. Paste the full content of [`PROMPT.md`](PROMPT.md) into that assistant.
+3. Ask the assistant to run [`PROMPT.md`](PROMPT.md), for example: `Run PROMPT.md`.
+   If the assistant cannot read local files, paste the full content of `PROMPT.md` instead.
 4. Follow only the explicit prompts for client restart, MCP setup confirmation, and push/PR approval.
 
 The assistant should handle the rest:

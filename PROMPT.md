@@ -1,6 +1,6 @@
 # MCP Client Compatibility Probe Prompt
 
-Use this prompt after cloning the repository. Paste it into the MCP-capable assistant you want to test.
+Use this prompt after cloning the repository. Prefer asking the MCP-capable assistant to run `PROMPT.md` from the cloned repository. If the assistant cannot read local files, paste the full content of this file into the assistant.
 
 You may replace the placeholders before running, but the assistant should infer or ask for missing values when possible:
 
